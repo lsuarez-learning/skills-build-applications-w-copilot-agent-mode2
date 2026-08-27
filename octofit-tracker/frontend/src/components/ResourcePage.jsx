@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { fetchCollection } from '../api.js'
 
-export default function ResourcePage({ resource, title, description, columns, emptyMessage }) {
+export default function ResourcePage({ resource, endpoint, title, description, columns, emptyMessage }) {
   const [records, setRecords] = useState([])
   const [state, setState] = useState({ status: 'loading', message: '' })
 
   useEffect(() => {
     let active = true
-    fetchCollection(resource)
+    fetchCollection(endpoint ?? resource)
       .then((data) => {
         if (active) {
           setRecords(data)
@@ -18,7 +18,7 @@ export default function ResourcePage({ resource, title, description, columns, em
         if (active) setState({ status: 'error', message: error.message })
       })
     return () => { active = false }
-  }, [resource])
+  }, [endpoint, resource])
 
   return (
     <section className="page-section">
