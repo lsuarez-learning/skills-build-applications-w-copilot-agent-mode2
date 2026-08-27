@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import type { Model } from 'mongoose'
 
+
 export function createCrudRouter<T>(model: Model<T>, options: { sort?: Record<string, 1 | -1> } = {}): Router {
   const router = Router()
 
